@@ -1,6 +1,6 @@
 use std::{
     fmt, fs,
-    io::{BufRead, BufReader},
+    io::{self, BufRead, BufReader, Write},
     sync::Barrier,
     thread,
 };
@@ -85,5 +85,6 @@ fn process_packet(packet: &Packet, signatures: &[String]) {
 }
 
 fn alert(signature: impl fmt::Debug) {
+    io::stdout().write_all(&[0x07]).unwrap(); // Bell character \a
     println!("[ALERT] Known signature found!: {signature:?}")
 }
